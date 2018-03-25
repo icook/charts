@@ -6,18 +6,17 @@ image:
   repository: jfelten/openvpn-docker
   tag: 1.1.0
   pullPolicy: IfNotPresent
-service:
-  name: openvpn
-  type: LoadBalancer
-  externalPort: 443
-  internalPort: 443
+  
+externalPort: 1194
+internalPort: 443
+
 resources:
   limits:
     cpu: 300m
     memory: 128Mi
   requests:
-    cpu: 300m
-    memory: 128Mi
+    cpu: 30m
+    memory: 32Mi
 persistence:
   enabled: true
   ## A manually managed Persistent Volume and Claim

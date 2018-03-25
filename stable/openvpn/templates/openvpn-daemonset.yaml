@@ -1,5 +1,5 @@
 apiVersion: extensions/v1beta1
-kind: Deployment
+kind: DaemonSet
 metadata:
   name: {{ template "openvpn.fullname" . }}
   namespace: {{ .Release.Namespace }}
@@ -9,7 +9,6 @@ metadata:
     chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
 
 spec:
-  replicas: {{ .Values.replicaCount }}
   template:
     metadata:
       labels:
@@ -25,8 +24,9 @@ spec:
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         command: ["/etc/openvpn/setup/configure.sh"]
         ports:
-        - containerPort: {{ .Values.service.internalPort }}
+        - containerPort: {{ .Values.internalPort }}
           name: openvpn
+          hostPort: {{ .Values.externalPort }}
         securityContext:
           capabilities:
             add:
